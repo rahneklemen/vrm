@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+#todo: ne deluje???!!!!!!
 lamda=0
 
 T_l=1
