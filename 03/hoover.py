@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+## dela,ampak je zelo občutljiv na parametre, dt, N itd..
 lamda=0
 tau=1
 T_l=1
@@ -51,9 +52,9 @@ def rk4():
         # y0[n+i]=1
 
 
-    h=10**-2
+    h=10**-1
     profil=[]
-    dolzina=10**5
+    dolzina=10**4
     print(dolzina,dolzina*0.95, dolzina-0.95*dolzina)
     for i in range(dolzina):
         # if(i%dolzina*0.1==0):
@@ -64,7 +65,7 @@ def rk4():
         k2=odvod(s+h*k1/2)
         k3=odvod(s+h*k2/2)
         k4=odvod(s+h*k3)
-        y0=s+h*(k1 + k2 + k2 + k3 + k3 + k4) / 6
+        y0=s+h*(k1 + 2*k2 + 2*k3 +  k4) / 6
 
         # if i> dolzina*0.95:
         #     profil.append(y0)
