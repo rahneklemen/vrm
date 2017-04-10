@@ -10,6 +10,7 @@ n=20
 
 
 
+
 def odvod(tabela):
     tabela_odvod=np.zeros(2*n)
 
@@ -69,7 +70,7 @@ def rk4():
         #     profil.append(y0)
 
         if (i%100==0 and i!=0):
-            # print(i)
+            print(i)
             y0[n]=np.random.normal(loc=y0[n],scale=np.sqrt(T_l))
             y0[2*n-1]=np.random.normal(loc=y0[2*n-1],scale=np.sqrt(T_r))
         #
@@ -92,12 +93,79 @@ def j(podatki):
 
 
 
+dt=10**-2
+##stanje [q,p]
+def kin(stanje,x):
+    n=len(stanje)
+    m=int(n/2)
+    stanje[:m]+=stanje[m:]*x*dt
+    return stanje
+
+def pot(tabela,x):
+    m=len(tabela)
+    n=int(m/2)
+    tabela_odvod=tabela
+    tabela_odvod[n]=-1*(2*tabela[0]-tabela[1]+lamda*tabela[0]**3)*x*dt
+    # test[n] += 2
+    for i in range(1,n-1):
+        tabela_odvod[n+i]=-1*(3*tabela[i]-tabela[i-1]-tabela[i+1]+lamda * tabela[i]**3)*x*dt
+        # test[n+i] +=2
+
+    tabela_odvod[2*n-1]=-1*(2*tabela[n-1]-tabela[n-2]+lamda*tabela[n-1]**3)*x*dt
+    # test[2*n-1] += 1
+
+
+    return tabela_odvod
+
+
+
+def s4(stanje):
+
+    x0=-(2)**(1/3)/(2-2**(1/3))
+    x1=1/(2-2**(1/3))
+
+
+    stanje = kin(stanje,x1/2)
+
+    stanje =pot(stanje,x1)
+
+    stanje=kin(stanje,(x1+x0)/2)
+
+    stanje = pot(stanje, x0)
+
+    stanje = kin(stanje, (x1 + x0) / 2)
+
+    stanje = pot(stanje, x1)
+
+    stanje = kin(stanje, x1 / 2)
+
+
+    return stanje
+
+def integracija(iteracija):
+    y0 = np.zeros(2 * n )
+    podatki=[]
+    podatki.append(y0)
+    for i in range(n):
+        y0[n+i]=np.random.uniform()
+        y0[n]=np.random.uniform()
+
+    for i in range(iteracija):
+        if i%100==0 and i!=0:
+            # print(i)
+            y0[n]=np.random.normal(loc=y0[n],scale=np.sqrt(T_l))
+            y0[2*n-1]=np.random.normal(loc=y0[2*n-1],scale=np.sqrt(T_r))
+        y0=s4(y0)
+        podatki.append(y0)
+    return podatki
+
 # a=[]
 # for i in range(100):
 #     a.append(rk4())
 # b=temp(a)
 
-a=rk4()
+# a=rk4()
+a=integracija(10**5)
 b=temp(a)
 # c=j(a[-1])
 
