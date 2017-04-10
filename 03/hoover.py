@@ -109,6 +109,10 @@ b=temp(a)
 plt.plot(b)
 plt.ylim([0.8,2.2])
 plt.grid()
+# todo plt.legend(title=r'\lambda')
+plt.ylabel(r'$<T_i>$')
+plt.xlabel('delec')
+
 plt.show()
 
 # plt.plot(c)
