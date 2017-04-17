@@ -17,8 +17,11 @@ def odvod(tabela,lamda):
     # print(tabela_odvod)
     return tabela_odvod
 
-def odvod2(tabela,lamda):
-    return -1*tabela
+
+# def odvod2(tabela,lamda):
+#     return -1*tabela
+
+
 
 def rk4(iteracij,dt,lam,n):
     data=[]
@@ -32,9 +35,12 @@ def rk4(iteracij,dt,lam,n):
         k4=odvod(zacetek+dt*k3,lam)
         zacetek=zacetek+dt/6*(k1 +2* k2 +2* k3 + k4)
         #todo preveri ali dela tempreratura
-        # if i%100==0 and i!=0:
-        #     zacetek[-1]=np.random.normal(loc=zacetek[-1],scale=np.sqrt(2))
-        #     zacetek[n]=np.random.normal(loc=zacetek[n],scale=np.sqrt(1))
+        if i%10==0 and i!=0:
+            a1=np.random.normal(scale=np.sqrt(2))
+            a2=np.random.normal(scale=np.sqrt(1))
+            # print(a1,a2)
+            zacetek[-1]=a1
+            zacetek[n]=a2
         data.append(zacetek)
 
     return data
@@ -49,14 +55,29 @@ def trajectorija(meritve):
         x.append(meritve[i][2]**2)
     return x
 
+def temp(data):
+    st_delcev=int((len(data[0]))/2)
+    print(st_delcev)
+    temperatura=np.zeros(st_delcev)
+    m=len(data)
+    for stanje in data:
+        for j in range(st_delcev):
+            temperatura[j]+=stanje[st_delcev+j]**2
+    for i in range(len(temperatura)):
+        temperatura[i]=temperatura[i]/m
+
+    return temperatura
 
 # odvod(np.ones(20),0)
-#
-a=trajectorija(rk4(10**3,10**-1,0,20))
+podatki=rk4(10**5,10**-2,0,20)
+b=trajectorija(podatki)
+
+a=temp(podatki)
 print(a)
 print(len(a))
 
 plt.plot(a,'o-')
+plt.grid()
 # plt.ylim([0,10])
 plt.show()
 
