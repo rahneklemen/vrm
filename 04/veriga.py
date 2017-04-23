@@ -12,8 +12,8 @@ def stanje(n):
     rand_st=np.random.rand(N)
     for i in range(N):
         j=np.random.randint(0,n-3)
-        delta=-2*(np.sin(theta[j])*np.sin(theta[j+1])*np.cos(theta[j]-theta[j+1])+np.cos(theta[j]*np.cos(theta[j+1])))
-        delta+=-2*(np.sin(theta[j+2])*np.sin(theta[j+3])*np.cos(theta[j+2]-theta[j+3])+np.cos(theta[j+2]*np.cos(theta[j+3])))
+        delta=-2*(np.sin(theta[j])*np.sin(theta[j+1])*np.cos(fi[j]-fi[j+1])+np.cos(theta[j])*np.cos(theta[j+1]))
+        delta+=-2*(np.sin(theta[j+2])*np.sin(theta[j+3])*np.cos(fi[j+2]-fi[j+3])+np.cos(theta[j+2])*np.cos(theta[j+3]))
         # print(delta)
         if rand_st[i]>np.exp(delta/T):
             theta[j+1]=np.pi-theta[j+1]
@@ -27,7 +27,7 @@ def korelacija_single(phi,theta):
     theta0=theta[0]
     kor=np.zeros(len(phi))
     for i in range(len(phi)):
-        kor[i]=np.sin(phi0)*np.sin(phi[i])*np.cos(theta0-theta[i])+np.cos(theta0)*np.cos(theta[i])
+        kor[i]=np.sin(theta0)*np.sin(theta[i])*np.cos(phi0-phi[i])+np.cos(theta0)*np.cos(theta[i])
     return kor
 
 
