@@ -57,6 +57,10 @@ def stanje(n,T):
         nova=(x1_nov*x2_nov+y1_nov*y2_nov+z1_nov*z2_nov)
         delta=nova-stara
 
+        # TODO -x1 in ostali imajo vrednosti več kot 1-> NOT ok
+
+        print(x1_nov,y1_nov,z1_nov)
+        print(x2_nov,y2_nov,z2_nov)
 
         if rand_st[i]< np.exp(-delta/T):
             print('-------------------------------^')
