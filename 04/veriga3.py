@@ -20,15 +20,14 @@ def stanje(n,T):
 
         x1,y1,z1=vektor(fi[j],theta[j])
         x2,y2,z2=vektor(fi[j+1],theta[j+1])
-        print('tocke', x1,x2,'\t',y1,y2,'\t',z1,z2,'\t',j)
+
         x_sum=x1+x2
         y_sum=y1+y2
         z_sum=z1+z2
 
         #presecisce-krona med sfero (r=1 s=0) in sfero (r=1 in s=rs)
-        rs_kvadrat=x_sum**2+y_sum**2+z_sum**2
-        print('rs',rs_kvadrat)
-        rs=np.sqrt(rs_kvadrat)
+        rs=np.sqrt(x_sum**2+y_sum**2+z_sum**2)
+        print('rs',rs)
 
         #kota krone
         alfa=np.arccos(rs/2)
@@ -46,6 +45,10 @@ def stanje(n,T):
         x1_nov = x_delta*np.cos(theta_sum)+y_delta*np.sin(theta_sum)*np.cos(fi_sum)+z_delta*np.sin(theta_sum)*np.sin(fi_sum)
         y1_nov = x_delta*-1*np.sin(theta_sum)+y_delta*np.cos(theta_sum)*np.cos(fi_sum)+z_delta*np.cos(theta_sum)*np.cos(fi_sum)
         z1_nov = -1*np.sin(theta_sum)+z_delta*np.cos(theta_sum)
+        #
+        # x1_nov = x_delta*np.cos(theta_sum)*np.cos(fi_sum)+y_delta*np.sin(fi_sum)*np.cos(theta_sum)-z_delta*np.sin(theta_sum)*np.sin(fi_sum)
+        # y1_nov = -1*x_delta*np.sin(fi_sum)+y_delta*np.cos(fi_sum)
+        # z1_nov = x_delta*np.cos(fi_sum)*np.sin(theta_sum)+y_delta*np.sin(fi_sum)*np.sin(theta_sum)+z_delta*np.cos(theta_sum)
 
         #drugi vektor:
         x2_nov=x_sum-x1_nov
@@ -58,9 +61,8 @@ def stanje(n,T):
         delta=nova-stara
 
         # TODO -x1 in ostali imajo vrednosti več kot 1-> NOT ok
-
-        print(x1_nov,y1_nov,z1_nov)
-        print(x2_nov,y2_nov,z2_nov)
+        print('tocke', x1,x2,'\t',y1,y2,'\t',z1,z2,'\t',j,'kot', alfa,beta)
+        print(x1_nov,y1_nov,z1_nov,x2_nov,y2_nov,z2_nov)
 
         if rand_st[i]< np.exp(-delta/T):
             print('-------------------------------^')
