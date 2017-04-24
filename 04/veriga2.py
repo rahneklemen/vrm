@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 def stanje(n,T):
-    N=10**4
+    N=10**2
     fi=np.random.rand(n)*2*np.pi
     theta=np.arccos(2*np.random.rand(n)-1)
     rand_st=np.random.rand(N)
@@ -30,22 +30,24 @@ def korelacija_single(phi,theta):
 
 def korelacija(temperatura):
     M=20
-    st_povprecenj=10**2
+    st_povprecenj=10**4
     korel_dolzina=np.zeros(M)
     for iteracija in range(st_povprecenj):
         a,b=stanje(M,temperatura)
         korel_dolzina+=korelacija_single(a,b)
-        print(iteracija)
+        if (iteracija / st_povprecenj * 100 % 1 == 0):
+            print(iteracija / st_povprecenj * 100)
 
     return korel_dolzina/st_povprecenj
 
-T1=10
-T2=0.01
+T1=100
+T2=0.0001
 
-plt.plot((korelacija(T1)),'o-',label="T1")
-# plt.plot((korelacija(T2)),'o-',label='T2')
+plt.plot((abs(korelacija(T1))),'o-',label="T1")
+plt.plot(abs(korelacija(T2)),'o-',label='T2')
 plt.grid()
 plt.legend()
+# plt.yscale('log')
 plt.show()
 
 
