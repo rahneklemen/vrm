@@ -40,14 +40,15 @@ def korelacija(temperatura):
 
     return korel_dolzina/st_povprecenj
 
-T1=100
-T2=0.0001
+T1=10
+T2=0.1
 
-plt.plot((abs(korelacija(T1))),'o-',label="T1")
-plt.plot(abs(korelacija(T2)),'o-',label='T2')
+plt.plot((abs(korelacija(T1))),'o-',label=str(T1))
+plt.plot(abs(korelacija(T2)),'o-',label=str(T2))
 plt.grid()
-plt.legend()
+plt.legend(title='temperatura')
 # plt.yscale('log')
+plt.savefig('korelacija-dolzina-hesenbergova-verija.png')
 plt.show()
 
 
