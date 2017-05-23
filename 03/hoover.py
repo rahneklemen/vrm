@@ -6,7 +6,7 @@ lamda=0
 tau=1
 T_l=1
 T_r=2
-n=50
+n=20
 
 
 
@@ -54,7 +54,7 @@ def rk4():
 
     h=10**-1
     profil=[]
-    dolzina=10**4
+    dolzina=10**5
     print(dolzina,dolzina*0.95, dolzina-0.95*dolzina)
     for i in range(dolzina):
         # if(i%dolzina*0.1==0):

@@ -69,7 +69,7 @@ def temp(data):
     return temperatura
 
 # odvod(np.ones(20),0)
-podatki=rk4(10**5,10**-2,0,20)
+podatki=rk4(10**5,10**-2,0.5,20)
 b=trajectorija(podatki)
 
 a=temp(podatki)
