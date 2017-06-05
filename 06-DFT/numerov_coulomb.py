@@ -59,8 +59,50 @@ def coulomb_vf(energija):
     print(norma)
     return fi,x
 
+def make_matriko(dimenzija,seznam):
+    if len(seznam)>dimenzija:
+        print("dimenzija matrike in dolzina seznama se ne ujemata")
+        return None
+    matrika=np.array([np.zeros(dimenzija) for i in range(dimenzija)])
+    for i in range(len(seznam)):
+        a=seznam[i]
+        j=0
+        k=i
+        while (k<dimenzija):
+            matrika[j][k]=a
+            j+=1
+            k+=1
+    matrika= matrika+matrika.T-np.diag(matrika.diagonal())
+    return matrika
+from scipy.sparse import diags
+def elektronski_potencial(vf, razdalja):
+    h = razdalja[1] - razdalja[0]
+    n = len(razdalja)
+    print(h)
+    pot = np.zeros(n)
+    gostota = np.zeros(n)
 
+    m=diags([1/90,-3/20,3/2,-49/18,3/2,-3/20,1/90], [-3,-2, -1,0,1, 2,3], shape=(n,n)).toarray()
 
+    for i in range(1,n):
+        gostota[i]=vf[i] ** 2 / razdalja[i] *h**2
+    U=np.linalg.solve(m,gostota)
+
+    # navadna diferenca
+    # pot[1]= vf[1] ** 2 / razdalja[1] *h**2
+    # gostota[1] = vf[1] ** 2 / razdalja[1] *h**2
+    # for i in range(2,n):
+    #     gostota[i]=vf[i]**2/razdalja[i]*h**2
+    #     pot[i]=-vf[i-1]**2*h**2/razdalja[i-1]-pot[i-2]+2*pot[i-1]
+    # simetrična, z matrikami
+    # U = np.array([np.zeros(n) for i in range(n)])
+
+    print(U)
+    # plt.plot(razdalja, pot)
+    # plt.plot(razdalja, gostota)
+    plt.plot(U)
+    plt.title('potencial')
+    plt.show()
 
 a=optimize.newton(integracija,-1)
 #a=0.499999996601
@@ -68,6 +110,7 @@ a=optimize.newton(integracija,-1)
 #r_max=15
 
 valovna_norm,prostor_os = coulomb_vf(a)
+elektronski_potencial(valovna_norm,prostor_os)
 
 plt.plot(prostor_os,valovna_norm)
 plt.grid()
